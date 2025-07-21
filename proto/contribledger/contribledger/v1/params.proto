@@ -1,0 +1,13 @@
+syntax = "proto3";
+package contribledger.contribledger.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "contribledger/x/contribledger/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "contribledger/x/contribledger/Params";
+  option (gogoproto.equal) = true;
+}
