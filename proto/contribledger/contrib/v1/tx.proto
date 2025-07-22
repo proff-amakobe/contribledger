@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package contribledger.contrib.v1;
+
+import "amino/amino.proto";
+import "contribledger/contrib/v1/params.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "contribledger/x/contrib/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // SubmitContribution defines the SubmitContribution RPC.
+  rpc SubmitContribution(MsgSubmitContribution) returns (MsgSubmitContributionResponse);
+
+  // CreateContribution defines the CreateContribution RPC.
+  rpc CreateContribution(MsgCreateContribution) returns (MsgCreateContributionResponse);
+
+  // UpdateContribution defines the UpdateContribution RPC.
+  rpc UpdateContribution(MsgUpdateContribution) returns (MsgUpdateContributionResponse);
+
+  // DeleteContribution defines the DeleteContribution RPC.
+  rpc DeleteContribution(MsgDeleteContribution) returns (MsgDeleteContributionResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "contribledger/x/contrib/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgSubmitContribution defines the MsgSubmitContribution message.
+message MsgSubmitContribution {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string user_id = 2;
+  uint64 weight_update = 3;
+  uint64 convergence_speed = 4;
+  uint64 accuracy_improvement = 5;
+  uint64 contribution_score = 6;
+}
+
+// MsgSubmitContributionResponse defines the MsgSubmitContributionResponse message.
+message MsgSubmitContributionResponse {}
+
+// MsgCreateContribution defines the MsgCreateContribution message.
+message MsgCreateContribution {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string index = 2;
+  string user_id = 3;
+  uint64 weight_update = 4;
+  uint64 convergence_speed = 5;
+  uint64 accuracy_improvement = 6;
+  uint64 contribution_score = 7;
+  int64 timestamp = 8;
+}
+
+// MsgCreateContributionResponse defines the MsgCreateContributionResponse message.
+message MsgCreateContributionResponse {}
+
+// MsgUpdateContribution defines the MsgUpdateContribution message.
+message MsgUpdateContribution {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string index = 2;
+  string user_id = 3;
+  uint64 weight_update = 4;
+  uint64 convergence_speed = 5;
+  uint64 accuracy_improvement = 6;
+  uint64 contribution_score = 7;
+  int64 timestamp = 8;
+}
+
+// MsgUpdateContributionResponse defines the MsgUpdateContributionResponse message.
+message MsgUpdateContributionResponse {}
+
+// MsgDeleteContribution defines the MsgDeleteContribution message.
+message MsgDeleteContribution {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string index = 2;
+}
+
+// MsgDeleteContributionResponse defines the MsgDeleteContributionResponse message.
+message MsgDeleteContributionResponse {}

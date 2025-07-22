@@ -46,6 +46,7 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v10/modules/core/keeper"
 
 	"contribledger/docs"
+	contribmodulekeeper "contribledger/x/contrib/keeper"
 	contribledgermodulekeeper "contribledger/x/contribledger/keeper"
 )
 
@@ -99,6 +100,7 @@ type App struct {
 	TransferKeeper      ibctransferkeeper.Keeper
 
 	ContribledgerKeeper contribledgermodulekeeper.Keeper
+	ContribKeeper       contribmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -179,6 +181,7 @@ func New(
 		&app.CircuitBreakerKeeper,
 		&app.ParamsKeeper,
 		&app.ContribledgerKeeper,
+		&app.ContribKeeper,
 	); err != nil {
 		panic(err)
 	}

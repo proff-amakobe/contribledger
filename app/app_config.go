@@ -1,6 +1,8 @@
 package app
 
 import (
+	_ "contribledger/x/contrib/module"
+	contribmoduletypes "contribledger/x/contrib/types"
 	_ "contribledger/x/contribledger/module"
 	contribledgermoduletypes "contribledger/x/contribledger/types"
 	"time"
@@ -127,6 +129,7 @@ var (
 						ibcexported.ModuleName,
 						// chain modules
 						contribledgermoduletypes.ModuleName,
+						contribmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/beginBlockers
 					},
 					EndBlockers: []string{
@@ -136,6 +139,7 @@ var (
 						group.ModuleName,
 						// chain modules
 						contribledgermoduletypes.ModuleName,
+						contribmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/endBlockers
 					},
 					// The following is mostly only needed when ModuleName != StoreKey name.
@@ -173,6 +177,7 @@ var (
 						icatypes.ModuleName,
 						// chain modules
 						contribledgermoduletypes.ModuleName,
+						contribmoduletypes.ModuleName,
 						// this line is used by starport scaffolding # stargate/app/initGenesis
 					},
 				}),
@@ -272,6 +277,10 @@ var (
 			{
 				Name:   contribledgermoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&contribledgermoduletypes.Module{}),
+			},
+			{
+				Name:   contribmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&contribmoduletypes.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

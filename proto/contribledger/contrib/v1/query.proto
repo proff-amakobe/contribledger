@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package contribledger.contrib.v1;
+
+import "amino/amino.proto";
+import "contribledger/contrib/v1/contribution.proto";
+import "contribledger/contrib/v1/params.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+
+option go_package = "contribledger/x/contrib/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/contribledger/contrib/v1/params";
+  }
+
+  // ListContribution Queries a list of Contribution items.
+  rpc GetContribution(QueryGetContributionRequest) returns (QueryGetContributionResponse) {
+    option (google.api.http).get = "/contribledger/contrib/v1/contribution/{index}";
+  }
+
+  // ListContribution defines the ListContribution RPC.
+  rpc ListContribution(QueryAllContributionRequest) returns (QueryAllContributionResponse) {
+    option (google.api.http).get = "/contribledger/contrib/v1/contribution";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryGetContributionRequest defines the QueryGetContributionRequest message.
+message QueryGetContributionRequest {
+  string index = 1;
+}
+
+// QueryGetContributionResponse defines the QueryGetContributionResponse message.
+message QueryGetContributionResponse {
+  Contribution contribution = 1 [(gogoproto.nullable) = false];
+}
+
+// QueryAllContributionRequest defines the QueryAllContributionRequest message.
+message QueryAllContributionRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+// QueryAllContributionResponse defines the QueryAllContributionResponse message.
+message QueryAllContributionResponse {
+  repeated Contribution contribution = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

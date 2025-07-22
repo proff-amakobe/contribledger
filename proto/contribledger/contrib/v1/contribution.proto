@@ -1,0 +1,16 @@
+syntax = "proto3";
+package contribledger.contrib.v1;
+
+option go_package = "contribledger/x/contrib/types";
+
+// Contribution defines the Contribution message.
+message Contribution {
+  string index = 1;
+  string user_id = 2;
+  uint64 weight_update = 3;
+  uint64 convergence_speed = 4;
+  uint64 accuracy_improvement = 5;
+  uint64 contribution_score = 6;
+  int64 timestamp = 7;
+  string creator = 8;
+}
